@@ -11,6 +11,7 @@ function App() {
 <MealProvider>
   <BrowserRouter>
     <Header/>
+    
     <Routes>
       <Route path='/' element={<Categories/>}/>
     </Routes>

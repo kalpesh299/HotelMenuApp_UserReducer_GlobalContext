@@ -7,7 +7,9 @@ const MealContext=createContext();
 const initialState={
     isLoading:false,
     categoryList:[],
-    fetchCategoryError:""
+    fetchCategoryError:"",
+    searchmealList:[],
+    searchmealerror:""
 }
 
 const MealProvider=({children})=>{

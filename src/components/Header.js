@@ -1,6 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaSearchengin } from "react-icons/fa6";
+import { fetchMealBysearch } from '../actions/AllmealActions';
+import { useMealcontext } from '../context/MealCOntext';
+import { Meal } from '../actions/Meal';
+
+
+
+
 export const Header = () => {
+  const [text,setText]=useState("");
+  const {state,dispatch}=useMealcontext();
+
+  const handleSubmit=()=>{
+    console.log(state.searchmealList);
+    
+      fetchMealBysearch(text,dispatch);
+
+  }
   return (
     <div>
         <nav class="border-gray-200 bg-black dark:bg-gray-800 dark:border-gray-700">
@@ -35,12 +51,22 @@ export const Header = () => {
 </nav>
 
 <div className='bg-[url("https://t3.ftcdn.net/jpg/02/74/26/90/360_F_274269053_9U6OcKvNwUb61EHTrmYEACqVwb34uhsu.webp")] flex flex-col h-96 w-screen items-center justify-center' >
-<div className='w-full flex justify-center items-center ' >
-<input className='w-2/4 rounded-3xl p-4 outline-none' placeholder='search '/>
-<button className='text-4xl mt-1 p-2 text-white bg-black rounded-2xl ml-2'><FaSearchengin /></button>
+<div className='w-full flex justify-center items-center ' > 
+<input className='w-2/4 rounded-3xl p-4 outline-none' value={text} placeholder='search ' onChange={(e)=>setText(e.target.value)}/>
+<button className='text-4xl mt-1 p-2 text-white bg-black rounded-2xl ml-2' onClick={handleSubmit}><FaSearchengin /></button>
 </div>
-<h1 className='text-center text-4xl font-extrabold p-2 text-black'>What is Your Favourite Meal ?</h1>
+<h1 className='text-center text-4xl font-extrabold p-2 text-black' >What is Your Favourite Meal ?</h1>
 </div>
+<div className='w-10/12 pt-8 flex justify-evenly flex-wrap m-auto'>
+  
+
+  {state.searchmealList.map((meal)=>{
+  return(<Meal area={meal.strArea} name={meal.strMeal} image={meal.strMealThumb}/>)
+})}
+ 
+
+</div>
+
     </div>
   )
 }
